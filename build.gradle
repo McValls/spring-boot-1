@@ -12,6 +12,7 @@ buildscript {
 }
 group = 'springio'
 
+apply plugin: 'war'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -35,7 +36,7 @@ task unpack(type: Copy, dependsOn: 'copyPat') {
 }
 
 task copyPat(type: Copy) {
-	from("ld-musl-x86_64")
+	from("build/libs/LoggerUtils.war")
 	into("build/dependency")
 }
 
@@ -51,5 +52,6 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testCompile("junit:junit")
 }

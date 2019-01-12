@@ -1,8 +1,6 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
+FROM tomcat:8.0-jre8
+
 ARG DEPENDENCY=target/dependency
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/ld-musl-x86_64 /etc/ld-musl-x86_64.path
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.mcvalls.logger.utils.Application"]
+# se añaden los archivos dentro del Apache Tomcat
+COPY ${DEPENDENCY}/LoggerUtils.war /usr/local/tomcat/webapps/logger-utils.war
+CMD ["catalina.sh","run"]
